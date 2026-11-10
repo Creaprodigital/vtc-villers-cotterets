@@ -18,6 +18,7 @@ pas de widget ni d'iframe. RBS gère prix, créneaux, paiement et notifications.
 | `transfert-gare.html` | Transferts gares locales, parisiennes et TGV |
 | `transfert-urgence.html` | Courses urgentes (téléphone, SMS, en ligne) |
 | `zone-desservie.html` | Communes desservies, aéroports, gares, villes (distances indicatives) |
+| `vtc-<commune>.html` (16 pages) | Une page par commune des environs : trajets fréquents avec distances réelles, services, communes voisines |
 | `faq.html` | Questions fréquentes (avec données structurées FAQ pour Google) |
 | `contact.html` | Téléphone, SMS, réservation, informations pratiques |
 | `reservation.html` | Module de réservation complet (accepte `?depart=…&arrivee=…`) |

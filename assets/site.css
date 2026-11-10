@@ -384,3 +384,10 @@ mark.todo { background: #fff1c2; color: #6b4b00; border-radius: 4px; padding: 1p
   .page-hero { padding: 32px 0 36px; }
   .page-hero-actions .btn { width: 100%; }
 }
+
+/* Puces cliquables (communes) */
+.chips--links li { padding: 0; transition: border-color .15s, box-shadow .15s; }
+.chips--links li:hover { border-color: var(--purple); box-shadow: 0 8px 20px -16px rgba(59, 43, 181, .7); }
+.chips--links a { display: block; padding: 8px 16px; color: var(--navy); text-decoration: none; border-radius: 999px; }
+.chips--links a:hover { color: var(--purple); }
+.chips--links a:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
