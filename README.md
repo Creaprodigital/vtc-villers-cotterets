@@ -8,17 +8,33 @@ pas de widget ni d'iframe. RBS gère prix, créneaux, paiement et notifications.
 - Base URL : `https://ridebookingsystem.com/api`
 - Tenant ID : `c24716e1-b673-4360-af88-f307a64e5947`
 
-## Fichiers
+## Pages
+
+| Page | Contenu |
+| --- | --- |
+| `index.html` | Accueil (hero, carte de réservation compacte, services, zone, contact) |
+| `services.html` | Vue d'ensemble des services, véhicules, points forts, étapes |
+| `transfert-aeroport.html` | Transferts CDG / Orly / Beauvais, liens « Calculer le prix » |
+| `transfert-gare.html` | Transferts gares locales, parisiennes et TGV |
+| `transfert-urgence.html` | Courses urgentes (téléphone, SMS, en ligne) |
+| `zone-desservie.html` | Communes desservies, aéroports, gares, villes (distances indicatives) |
+| `faq.html` | Questions fréquentes (avec données structurées FAQ pour Google) |
+| `contact.html` | Téléphone, SMS, réservation, informations pratiques |
+| `reservation.html` | Module de réservation complet (accepte `?depart=…&arrivee=…`) |
+| `mentions-legales.html`, `confidentialite.html`, `cookies.html`, `cgv.html` | Pages légales |
+| `404.html` | Page d'erreur (déclarée dans `.htaccess`) |
+| `booking-success/`, `booking-cancel/` | Pages de retour Stripe (paiement en ligne) |
+
+## Fichiers techniques
 
 | Fichier | Rôle |
 | --- | --- |
-| `index.html` | Page d'accueil avec le module de réservation (`#reservation`) |
-| `assets/rbs-booking.js` | Module de réservation (client API + formulaire) |
-| `assets/rbs-booking.css` | Styles du module (préfixe `.rbs`, autonome) |
-| `assets/site.css` | Styles du site (police Outfit, dégradé indigo → rose) |
-| `assets/img/` | Logo (`logo-mark.svg`) et photos (`hero.jpg`, `aeroport.jpg`, `gare.jpg`, `urgence.jpg`) |
-| `booking-success/` | Page de retour Stripe après paiement en ligne (vérifie le statut) |
-| `booking-cancel/` | Page de retour Stripe en cas d'abandon du paiement |
+| `assets/rbs-booking.js` / `.css` | Module de réservation (client API + formulaire, styles préfixés `.rbs`) |
+| `assets/site.css` | Styles du site |
+| `assets/fonts/` | Police Outfit hébergée localement (aucun appel à Google Fonts) |
+| `assets/img/` | Logo et photos |
+| `.htaccess` | Page 404, cache, en-têtes de sécurité |
+| `robots.txt` | Indexation (pages de retour de paiement exclues) |
 
 ## Intégrer le module dans n'importe quelle page
 
@@ -74,10 +90,20 @@ Les fichiers CSS/JS sont appelés avec un numéro de version (`assets/site.css?v
 les pages `booking-success/` et `booking-cancel/`, sinon les visiteurs peuvent garder
 l'ancienne version en cache. Le fichier `.htaccess` force la revalidation des pages HTML.
 
-## À compléter
+## À compléter avant la mise en ligne
 
-- Pages **Mentions légales**, **Confidentialité** et **Cookies** (obligatoires) : les liens du
-  pied de page pointent pour l'instant vers `#`.
+Les informations manquantes sont surlignées en jaune sur les pages légales
+(`[À compléter : …]`) ; les clauses à confirmer sont marquées `[À valider]`.
+
+- **Mentions légales** : raison sociale, forme juridique et capital, adresse du siège,
+  SIRET/RCS, n° de TVA, n° d'inscription au registre VTC (EVTC), email, directeur de publication.
+- **Confidentialité** : raison sociale, adresse, email, localisation des données chez
+  Ride Booking System.
+- **CGV** : identité de l'entreprise, assureur et n° de contrat, médiateur de la consommation
+  (obligatoire), montants d'attente et de nettoyage ; valider les délais d'attente inclus,
+  les frais d'annulation, péages, animaux, nourriture.
+
+Pour retrouver tous les points : rechercher `class="todo"` dans les fichiers HTML.
 
 ## Tester en local
 

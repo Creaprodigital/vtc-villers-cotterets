@@ -17,6 +17,8 @@
  *   data-rbs-title="…"   titre affiché (par défaut : titre configuré dans RBS)
  *   data-rbs-theme="site"  ne pas appliquer la couleur configurée dans RBS
  *                          (les variables CSS --rbs-* du site sont utilisées)
+ *
+ * Pré-remplissage par l'URL de la page : ?depart=…&arrivee=…
  */
 (function () {
   "use strict";
@@ -431,6 +433,26 @@
     this.root.appendChild(form);
     this.updateTripType();
     this.updateSummary();
+    this.applyPrefill();
+  };
+
+  // Pré-remplit le trajet depuis l'URL (?depart=…&arrivee=…), une seule fois
+  BookingModule.prototype.applyPrefill = function () {
+    if (this.prefilled) return;
+    this.prefilled = true;
+    var params;
+    try { params = new URLSearchParams(window.location.search); } catch (e) { return; }
+    var self = this;
+    var set = function (fieldObj, key, value) {
+      if (!value) return;
+      value = value.slice(0, 200);
+      fieldObj.input.value = value;
+      fieldObj.value = { address: value, lat: null, lng: null };
+      self.state[key] = fieldObj.value;
+    };
+    set(this.pickupField, "pickup", params.get("depart"));
+    set(this.dropoffField, "dropoff", params.get("arrivee"));
+    if (this.canQuote() && !this.compact) this.fetchQuotes();
   };
 
   BookingModule.prototype.reveal = function () {

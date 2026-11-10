@@ -5,20 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VTC Villers-Cotterêts — Votre trajet, en toute sérénité</title>
   <meta name="description" content="VTC à Villers-Cotterêts et dans les Hauts-de-France : transferts aéroports, gares et trajets urgents, 24h/24 et 7j/7. Prix annoncé à la réservation. Appelez le +33 7 69 62 69 23.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="VTC Villers Cotterêts">
+  <meta property="og:title" content="VTC Villers-Cotterêts — Votre trajet, en toute sérénité">
+  <meta property="og:description" content="VTC à Villers-Cotterêts et dans les Hauts-de-France : transferts aéroports, gares et trajets urgents, 24h/24 et 7j/7. Prix annoncé à la réservation. Appelez le +33 7 69 62 69 23.">
+  <meta name="theme-color" content="#3b2bb5">
   <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="assets/site.css?v=20261110-3">
-  <link rel="stylesheet" href="assets/rbs-booking.css?v=20261110-3">
-  <script src="assets/rbs-booking.js?v=20261110-3" defer></script>
-
+  <link rel="preload" href="assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/site.css?v=20261110-4">
+  <link rel="stylesheet" href="assets/rbs-booking.css?v=20261110-4">
+  <script src="assets/rbs-booking.js?v=20261110-4" defer></script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "VTC Villers Cotterêts", "description": "Chauffeur VTC à Villers-Cotterêts : transferts aéroports, gares et trajets urgents, 24h/24 et 7j/7.", "telephone": "+33769626923", "address": {"@type": "PostalAddress", "addressLocality": "Villers-Cotterêts", "postalCode": "02600", "addressRegion": "Hauts-de-France", "addressCountry": "FR"}, "areaServed": ["Villers-Cotterêts", "Aisne", "Hauts-de-France", "Paris"], "openingHoursSpecification": {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "opens": "00:00", "closes": "23:59"}}</script>
 </head>
 <body id="accueil">
-  <!-- Icônes (Lucide, licence ISC) -->
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
     <defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e255b6"/><stop offset="1" stop-color="#6c33d6"/></linearGradient></defs>
     <symbol id="pin-shape" viewBox="0 0 48 56"><path d="M24 3C12.95 3 4 11.8 4 22.8c0 13.3 17 29 18.6 30.5a2 2 0 0 0 2.8 0C27 51.8 44 36.1 44 22.8 44 11.8 35.05 3 24 3Z" fill="#fff" stroke="url(#pg)" stroke-width="3.5"/></symbol>
+    <!-- Icônes : Lucide (licence ISC) -->
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></symbol>
     <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
@@ -28,26 +33,39 @@
     <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-luggage" viewBox="0 0 24 24"><path d="M6 20a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2"/><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"/><path d="M10 20h4"/><circle cx="16" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-euro" viewBox="0 0 24 24"><path d="M4 10h12"/><path d="M4 14h9"/><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M11.53 2.3a.53.53 0 0 1 .95 0l2.31 4.68a2.12 2.12 0 0 0 1.6 1.16l5.16.76a.53.53 0 0 1 .3.9l-3.74 3.64a2.12 2.12 0 0 0-.61 1.88l.88 5.14a.53.53 0 0 1-.77.56l-4.62-2.43a2.12 2.12 0 0 0-1.97 0L6.4 21.01a.53.53 0 0 1-.77-.56l.88-5.14a2.12 2.12 0 0 0-.61-1.88L2.16 9.8a.53.53 0 0 1 .3-.91l5.16-.75a2.12 2.12 0 0 0 1.6-1.16z"/></symbol>
   </svg>
+
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#accueil" class="brand" aria-label="VTC Villers Cotterêts — accueil">
+      <a href="index.html" class="brand" aria-label="VTC Villers Cotterêts — accueil">
         <img src="assets/img/logo-mark.svg" alt="" width="58" height="51">
-        <span class="brand-text"><span>VTC</span><span>Villers Cotterêts</span></span>
+          <span class="brand-text"><span>VTC</span><span>Villers Cotterêts</span></span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu">
         <svg class="ico"><use href="#i-menu"/></svg>
       </button>
       <nav class="nav" id="nav" aria-label="Navigation principale">
-        <a href="#accueil" class="is-active" aria-current="page">Accueil</a>
-        <a href="#services">Nos services</a>
-        <a href="#zone">Zone desservie</a>
+        <a href="index.html" class="is-active" aria-current="page">Accueil</a>
+        <a href="services.html">Nos services</a>
+        <a href="zone-desservie.html">Zone desservie</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
         <a href="#reservation" class="btn btn--sm">Réserver un trajet</a>
       </nav>
     </div>
   </header>
-
-  <main>
+  <main id="contenu">
     <!-- HERO -->
     <section class="hero">
       <div class="container hero-grid">
@@ -104,7 +122,7 @@
               <div>
                 <h3>Transferts aéroports</h3>
                 <p>Partez et arrivez l'esprit tranquille.</p>
-                <a href="#reservation" class="more">En savoir plus <svg class="ico"><use href="#i-arrow"/></svg></a>
+                <a href="transfert-aeroport.html" class="more">En savoir plus <svg class="ico"><use href="#i-arrow"/></svg></a>
               </div>
             </div>
           </article>
@@ -115,7 +133,7 @@
               <div>
                 <h3>Transferts gares</h3>
                 <p>Une prise en charge pour vos départs et arrivées.</p>
-                <a href="#reservation" class="more">En savoir plus <svg class="ico"><use href="#i-arrow"/></svg></a>
+                <a href="transfert-gare.html" class="more">En savoir plus <svg class="ico"><use href="#i-arrow"/></svg></a>
               </div>
             </div>
           </article>
@@ -126,7 +144,7 @@
               <div>
                 <h3>Transferts d'urgence</h3>
                 <p>Disponibles 24h/24, 7j/7.</p>
-                <a href="tel:+33769626923" class="more">En savoir plus <svg class="ico"><use href="#i-arrow"/></svg></a>
+                <a href="transfert-urgence.html" class="more">En savoir plus <svg class="ico"><use href="#i-arrow"/></svg></a>
               </div>
             </div>
           </article>
@@ -140,7 +158,7 @@
         <div class="zone-panel">
           <div class="zone-main">
             <h2>Villers-Cotterêts &amp; les Hauts-de-France</h2>
-            <p>Vos trajets locaux et vos transferts dans toute la région.</p>
+            <p>Vos trajets locaux et vos transferts dans toute la région. <a class="more" href="zone-desservie.html">Voir la zone desservie <svg class="ico"><use href="#i-arrow"/></svg></a></p>
             <div class="route">
               <svg class="route-line" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M22 26 Q33 2 44 24" /><path d="M56 24 Q67 2 78 26" />
@@ -186,7 +204,7 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <a href="#accueil" class="brand" aria-label="VTC Villers Cotterêts — accueil">
+        <a href="index.html" class="brand" aria-label="VTC Villers Cotterêts — accueil">
           <img src="assets/img/logo-mark.svg" alt="" width="58" height="51">
           <span class="brand-text"><span>VTC</span><span>Villers Cotterêts</span></span>
         </a>
@@ -196,19 +214,20 @@
       <div class="footer-col">
         <h3>Nos services</h3>
         <ul>
-          <li><a href="#services">Transferts gares</a></li>
-          <li><a href="#services">Transferts aéroports</a></li>
-          <li><a href="#services">Transferts d'urgence</a></li>
-          <li><a href="#zone">Trajets locaux</a></li>
+          <li><a href="transfert-gare.html">Transferts gares</a></li>
+          <li><a href="transfert-aeroport.html">Transferts aéroports</a></li>
+          <li><a href="transfert-urgence.html">Transferts d'urgence</a></li>
+          <li><a href="services.html#longue-distance">Trajets locaux &amp; longue distance</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h3>Navigation</h3>
         <ul>
-          <li><a href="#accueil">Accueil</a></li>
-          <li><a href="#services">Nos services</a></li>
-          <li><a href="#zone">Zone desservie</a></li>
-          <li><a href="#reservation">Réserver un trajet</a></li>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="zone-desservie.html">Zone desservie</a></li>
+          <li><a href="faq.html">Questions fréquentes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="reservation.html">Réserver un trajet</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -223,10 +242,10 @@
     <div class="container footer-bottom">
       <p>© 2026 VTC Villers Cotterêts</p>
       <ul>
-        <!-- TODO : créer les pages légales (obligatoires) et mettre à jour ces liens -->
-        <li><a href="#">Mentions légales</a></li>
-        <li><a href="#">Confidentialité</a></li>
-        <li><a href="#">Cookies</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><a href="confidentialite.html">Confidentialité</a></li>
+        <li><a href="cookies.html">Cookies</a></li>
+        <li><a href="cgv.html">CGV</a></li>
       </ul>
     </div>
   </footer>
