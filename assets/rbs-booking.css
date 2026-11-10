@@ -12,6 +12,10 @@
   --rbs-warn: #8a5a00;
   --rbs-warn-bg: #fff8e6;
   --rbs-radius: 12px;
+  --rbs-btn-bg: var(--rbs-primary);
+  --rbs-btn-ink: var(--rbs-primary-ink);
+  --rbs-title: var(--rbs-text);
+  --rbs-icon: var(--rbs-muted);
   font-family: inherit;
   color: var(--rbs-text);
   background: var(--rbs-bg);
@@ -26,7 +30,8 @@
 .rbs [hidden] { display: none !important; }
 
 .rbs-head { margin-bottom: 20px; }
-.rbs-title { margin: 0; font-size: clamp(1.35rem, 3vw, 1.75rem); line-height: 1.2; }
+.rbs-title { margin: 0; font-size: clamp(1.35rem, 3vw, 1.75rem); line-height: 1.2; color: var(--rbs-title); display: flex; align-items: center; gap: 12px; }
+.rbs-title .rbs-icon { width: 1.15em; height: 1.15em; color: var(--rbs-primary); flex: none; }
 .rbs-subtitle { margin: 6px 0 0; color: var(--rbs-muted); }
 
 .rbs-loading { display: flex; gap: 10px; align-items: center; color: var(--rbs-muted); padding: 24px 0; }
@@ -57,6 +62,32 @@
 }
 textarea.rbs-input { resize: vertical; min-height: 80px; }
 .rbs-input:focus { outline: none; border-color: var(--rbs-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--rbs-primary) 30%, transparent); }
+
+/* Champ avec icône */
+.rbs-iconfield { position: relative; }
+.rbs-iconfield > .rbs-icon {
+  position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px; color: var(--rbs-icon); pointer-events: none; z-index: 1;
+}
+.rbs-iconfield .rbs-input { padding-left: 42px; }
+.rbs-iconfield .rbs-ac > .rbs-input { padding-left: 42px; }
+.rbs-iconfield:focus-within > .rbs-icon { color: var(--rbs-primary); }
+
+/* Mode compact : trajet sur une ligne, libellés masqués visuellement */
+.rbs--compact .rbs-head { margin-bottom: 18px; }
+.rbs--compact .rbs-section--trip { margin-bottom: 18px; }
+.rbs--compact .rbs-section--trip > .rbs-legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rbs--compact .rbs-grid--trip { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); align-items: end; }
+.rbs--compact .rbs-grid--trip .rbs-field:not(.rbs-field--labelled) > .rbs-label {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.rbs--compact .rbs-grid--trip .rbs-field { position: relative; }
+.rbs-continue { display: grid; gap: 12px; justify-items: end; }
+.rbs-continue .rbs-alert { justify-self: stretch; }
+.rbs-continue .rbs-btn { min-width: min(100%, 260px); }
+.rbs-details { border-top: 1px solid var(--rbs-border); padding-top: 24px; margin-top: 6px; }
+.rbs--compact .rbs-details { animation: rbs-fade .3s ease; }
+@keyframes rbs-fade { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 
 /* Onglets type de trajet */
 .rbs-tabs { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: var(--rbs-surface); border-radius: 999px; margin-bottom: 16px; }
@@ -130,8 +161,9 @@ textarea.rbs-input { resize: vertical; min-height: 80px; }
   font: inherit; font-weight: 700; cursor: pointer; border-radius: var(--rbs-radius);
   padding: 13px 20px; border: 1px solid var(--rbs-border); background: var(--rbs-bg); color: var(--rbs-text);
 }
-.rbs-btn--primary { background: var(--rbs-primary); border-color: var(--rbs-primary); color: var(--rbs-primary-ink); font-size: 1.05rem; }
-.rbs-btn--primary:hover { filter: brightness(.95); }
+.rbs-btn--primary { background: var(--rbs-btn-bg); border: 0; color: var(--rbs-btn-ink); font-size: 1.05rem; }
+.rbs-btn--primary:hover { filter: brightness(1.06); }
+.rbs-btn:focus-visible { outline: 2px solid var(--rbs-primary); outline-offset: 3px; }
 .rbs-btn:disabled { opacity: .6; cursor: progress; }
 
 .rbs-alert { border-radius: var(--rbs-radius); padding: 12px 14px; font-size: .92rem; }
@@ -153,7 +185,8 @@ textarea.rbs-input { resize: vertical; min-height: 80px; }
 .rbs-recap dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
 
 @media (max-width: 600px) {
-  .rbs-grid { grid-template-columns: minmax(0, 1fr); }
+  .rbs-grid, .rbs--compact .rbs-grid--trip { grid-template-columns: minmax(0, 1fr); }
+  .rbs-continue .rbs-btn { width: 100%; }
   .rbs-vehicle { grid-template-columns: 64px 1fr; }
   .rbs-vehicle-img { width: 64px; height: 44px; }
   .rbs-vehicle-price { grid-column: 1 / -1; flex-direction: row; justify-content: flex-end; align-items: baseline; gap: 8px; }

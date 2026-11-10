@@ -3,68 +3,247 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TAOL VTC Villers-Cotterêts — Réservation de chauffeur privé</title>
-  <meta name="description" content="Réservez votre VTC à Villers-Cotterêts : transferts gares et aéroports (CDG, Orly, Beauvais), trajets longue distance, prix fixe annoncé à la réservation.">
+  <title>VTC Villers-Cotterêts — Votre trajet, en toute sérénité</title>
+  <meta name="description" content="VTC à Villers-Cotterêts et dans les Hauts-de-France : transferts aéroports, gares et trajets urgents, 24h/24 et 7j/7. Prix annoncé à la réservation. Appelez le +33 7 69 62 69 23.">
+  <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="assets/site.css">
   <link rel="stylesheet" href="assets/rbs-booking.css">
   <script src="assets/rbs-booking.js" defer></script>
+
 </head>
-<body>
+<body id="accueil">
+  <!-- Icônes (Lucide, licence ISC) -->
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e255b6"/><stop offset="1" stop-color="#6c33d6"/></linearGradient></defs>
+    <symbol id="pin-shape" viewBox="0 0 48 56"><path d="M24 3C12.95 3 4 11.8 4 22.8c0 13.3 17 29 18.6 30.5a2 2 0 0 0 2.8 0C27 51.8 44 36.1 44 22.8 44 11.8 35.05 3 24 3Z" fill="#fff" stroke="url(#pg)" stroke-width="3.5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+    <symbol id="i-train" viewBox="0 0 24 24"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1"/><path d="m9 15-1-1"/><path d="m15 15 1-1"/><path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z"/><path d="m8 19-2 3"/><path d="m16 19 2 3"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  </svg>
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#" class="logo">TAOL <span>VTC</span></a>
-      <nav class="nav" aria-label="Navigation principale">
-        <a href="#services">Services</a>
-        <a href="#reservation" class="nav-cta">Réserver</a>
+      <a href="#accueil" class="brand" aria-label="VTC Villers Cotterêts — accueil">
+        <img src="assets/img/logo-mark.svg" alt="" width="58" height="51">
+        <span class="brand-text"><span>VTC</span><span>Villers Cotterêts</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Ouvrir le menu">
+        <svg class="ico"><use href="#i-menu"/></svg>
+      </button>
+      <nav class="nav" id="nav" aria-label="Navigation principale">
+        <a href="#accueil" class="is-active" aria-current="page">Accueil</a>
+        <a href="#services">Nos services</a>
+        <a href="#zone">Zone desservie</a>
+        <a href="#reservation" class="btn btn--sm">Réserver un trajet</a>
       </nav>
     </div>
   </header>
 
   <main>
+    <!-- HERO -->
     <section class="hero">
-      <div class="container hero-inner">
+      <div class="container hero-grid">
         <div class="hero-text">
-          <p class="eyebrow">Chauffeur privé · Villers-Cotterêts &amp; Aisne</p>
-          <h1>Votre VTC à Villers-Cotterêts, à l'heure et au prix annoncé</h1>
-          <p class="lead">Transferts vers les gares et les aéroports parisiens, déplacements professionnels, trajets longue distance. Prix fixe calculé instantanément, sans surprise.</p>
-          <a href="#reservation" class="btn">Estimer et réserver</a>
+          <p class="eyebrow">Villers-Cotterêts • Hauts-de-France</p>
+          <h1>Votre trajet,<br>en toute <span class="grad-text">sérénité.</span></h1>
+          <p class="lead">Vos transferts privés à Villers-Cotterêts et dans les Hauts-de-France.</p>
+
+          <a class="call" href="tel:+33769626923">
+            <span class="call-icon"><svg class="ico"><use href="#i-phone"/></svg></span>
+            <span class="call-text">
+              <span class="call-label">Appelez-nous</span>
+              <span class="call-number">+33 7 69 62 69 23</span>
+            </span>
+          </a>
+
+          <a href="#reservation" class="btn btn--lg">Réserver mon VTC</a>
+        </div>
+
+        <figure class="hero-media">
+          <img src="assets/img/hero.jpg" alt="Chauffeuse VTC devant son véhicule à Villers-Cotterêts" width="800" height="628" fetchpriority="high">
+          <figcaption class="badge">
+            <svg class="ico"><use href="#i-calendar"/></svg>
+            <span>À vos côtés,<br><strong>24h/24 et 7j/7</strong></span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- RÉSERVATION (module RBS) -->
+    <section id="reservation" class="booking" aria-label="Réservation en ligne">
+      <div class="container">
+        <div data-rbs-booking
+             data-tenant-id="c24716e1-b673-4360-af88-f307a64e5947"
+             data-rbs-layout="compact"
+             data-rbs-theme="site"
+             data-rbs-title="Où souhaitez-vous aller ?"></div>
+        <noscript><p class="noscript">Activez JavaScript pour réserver en ligne, ou appelez-nous au <a href="tel:+33769626923">+33 7 69 62 69 23</a>.</p></noscript>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="services">
+      <div class="container">
+        <header class="section-head">
+          <h2>Un VTC pour chaque besoin</h2>
+          <p>Des trajets adaptés à votre quotidien et à vos imprévus.</p>
+        </header>
+        <div class="cards">
+          <article class="card">
+            <img src="assets/img/aeroport.jpg" alt="Avion sur le tarmac vu depuis le terminal" width="462" height="306" loading="lazy">
+            <div class="card-body">
+              <svg class="ico card-icon"><use href="#i-plane"/></svg>
+              <div>
+                <h3>Transferts aéroports</h3>
+                <p>Partez et arrivez l'esprit tranquille.</p>
+                <a href="#reservation" class="more">En savoir plus <svg class="ico"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <img src="assets/img/gare.jpg" alt="Train en gare" width="456" height="306" loading="lazy">
+            <div class="card-body">
+              <svg class="ico card-icon"><use href="#i-train"/></svg>
+              <div>
+                <h3>Transferts gares</h3>
+                <p>Une prise en charge pour vos départs et arrivées.</p>
+                <a href="#reservation" class="more">En savoir plus <svg class="ico"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </article>
+          <article class="card">
+            <img src="assets/img/urgence.jpg" alt="Berline noire de nuit en ville" width="460" height="306" loading="lazy">
+            <div class="card-body">
+              <svg class="ico card-icon"><use href="#i-zap"/></svg>
+              <div>
+                <h3>Transferts d'urgence</h3>
+                <p>Disponibles 24h/24, 7j/7.</p>
+                <a href="tel:+33769626923" class="more">En savoir plus <svg class="ico"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="reservation" class="booking-section" aria-label="Réservation en ligne">
+    <!-- ZONE DESSERVIE -->
+    <section id="zone" class="zone">
       <div class="container">
-        <!-- Module de réservation RBS (API publique) -->
-        <div data-rbs-booking data-tenant-id="c24716e1-b673-4360-af88-f307a64e5947"></div>
-        <noscript><p class="noscript">Activez JavaScript pour réserver en ligne.</p></noscript>
+        <div class="zone-panel">
+          <div class="zone-main">
+            <h2>Villers-Cotterêts &amp; les Hauts-de-France</h2>
+            <p>Vos trajets locaux et vos transferts dans toute la région.</p>
+            <div class="route">
+              <svg class="route-line" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M22 26 Q33 2 44 24" /><path d="M56 24 Q67 2 78 26" />
+              </svg>
+              <ol class="stops" aria-label="Exemples de trajets">
+              <li class="stop">
+                <span class="stop-pin" aria-hidden="true"><svg class="pin-shape"><use href="#pin-shape"/></svg><span class="stop-dot"></span></span>
+                <span class="stop-label">Villers-Cotterêts</span>
+              </li>
+              <li class="stop">
+                <span class="stop-pin" aria-hidden="true"><svg class="pin-shape"><use href="#pin-shape"/></svg><svg class="ico"><use href="#i-train"/></svg></span>
+                <span class="stop-label">Gares</span>
+              </li>
+              <li class="stop">
+                <span class="stop-pin" aria-hidden="true"><svg class="pin-shape"><use href="#pin-shape"/></svg><svg class="ico"><use href="#i-plane"/></svg></span>
+                <span class="stop-label">Aéroports</span>
+              </li>
+              </ol>
+            </div>
+          </div>
+          <div class="zone-cta">
+            <a href="#reservation" class="btn btn--lg">Préparer mon trajet</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="services" class="services">
-      <div class="container">
-        <h2>Nos services</h2>
-        <div class="cards">
-          <article class="card">
-            <h3>Aéroports</h3>
-            <p>Roissy-CDG, Orly, Beauvais : prise en charge à domicile, suivi de votre vol et accueil à l'arrivée.</p>
-          </article>
-          <article class="card">
-            <h3>Gares</h3>
-            <p>Villers-Cotterêts, Soissons, Crépy-en-Valois, Paris-Nord… pour ne jamais rater votre train.</p>
-          </article>
-          <article class="card">
-            <h3>Longue distance</h3>
-            <p>Déplacements professionnels ou personnels partout en France, en berline ou en van.</p>
-          </article>
+    <!-- BANDEAU CTA -->
+    <section class="cta-band">
+      <div class="container cta-inner">
+        <div>
+          <h2>Un trajet à prévoir ?</h2>
+          <p>Votre VTC à Villers-Cotterêts, 24h/24 et 7j/7.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="tel:+33769626923" class="btn btn--white"><svg class="ico"><use href="#i-phone"/></svg> +33 7 69 62 69 23</a>
+          <a href="#reservation" class="btn btn--white">Réserver un trajet</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>© TAOL VTC Villers-Cotterêts</p>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#accueil" class="brand" aria-label="VTC Villers Cotterêts — accueil">
+          <img src="assets/img/logo-mark.svg" alt="" width="58" height="51">
+          <span class="brand-text"><span>VTC</span><span>Villers Cotterêts</span></span>
+        </a>
+        <p class="footer-tagline">Vos déplacements en toute sérénité.</p>
+        <p>Transferts privés à Villers-Cotterêts et dans les Hauts-de-France.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Nos services</h3>
+        <ul>
+          <li><a href="#services">Transferts gares</a></li>
+          <li><a href="#services">Transferts aéroports</a></li>
+          <li><a href="#services">Transferts d'urgence</a></li>
+          <li><a href="#zone">Trajets locaux</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Navigation</h3>
+        <ul>
+          <li><a href="#accueil">Accueil</a></li>
+          <li><a href="#services">Nos services</a></li>
+          <li><a href="#zone">Zone desservie</a></li>
+          <li><a href="#reservation">Réserver un trajet</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <ul class="contact-list">
+          <li><svg class="ico"><use href="#i-phone"/></svg><a href="tel:+33769626923">+33 7 69 62 69 23</a></li>
+          <li><svg class="ico"><use href="#i-pin"/></svg><span>Villers-Cotterêts<br>Hauts-de-France</span></li>
+          <li><svg class="ico"><use href="#i-clock"/></svg><span>24h/24 • 7j/7</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 VTC Villers Cotterêts</p>
+      <ul>
+        <!-- TODO : créer les pages légales (obligatoires) et mettre à jour ces liens -->
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">Confidentialité</a></li>
+        <li><a href="#">Cookies</a></li>
+      </ul>
     </div>
   </footer>
+
+  <script>
+    // Menu mobile
+    (function () {
+      var btn = document.querySelector(".nav-toggle");
+      var nav = document.getElementById("nav");
+      btn.addEventListener("click", function () {
+        var open = nav.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      nav.addEventListener("click", function (e) {
+        if (e.target.closest("a")) { nav.classList.remove("is-open"); btn.setAttribute("aria-expanded", "false"); }
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -12,6 +12,11 @@
  * Attributs optionnels sur le conteneur :
  *   data-tenant-id="…"   (par défaut : TENANT_ID ci-dessous)
  *   data-api-base="…"    (par défaut : https://ridebookingsystem.com/api)
+ *   data-rbs-layout="compact"  formulaire en 2 temps : trajet d'abord, puis le
+ *                               reste après le bouton « Réserver mon trajet »
+ *   data-rbs-title="…"   titre affiché (par défaut : titre configuré dans RBS)
+ *   data-rbs-theme="site"  ne pas appliquer la couleur configurée dans RBS
+ *                          (les variables CSS --rbs-* du site sont utilisées)
  */
 (function () {
   "use strict";
@@ -61,6 +66,28 @@
       clearTimeout(t);
       t = setTimeout(function () { fn.apply(ctx, args); }, ms);
     };
+  }
+
+  var SVG_NS = "http://www.w3.org/2000/svg";
+  var ICONS = {
+    pin: '<path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
+    flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/>',
+    calendar: '<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>',
+    clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+    repeat: '<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
+  };
+  function icon(name) {
+    var svg = document.createElementNS(SVG_NS, "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("stroke", "currentColor");
+    svg.setAttribute("stroke-width", "2");
+    svg.setAttribute("stroke-linecap", "round");
+    svg.setAttribute("stroke-linejoin", "round");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("class", "rbs-icon");
+    svg.innerHTML = ICONS[name] || "";
+    return svg;
   }
 
   function pad(n) { return (n < 10 ? "0" : "") + n; }
@@ -274,6 +301,7 @@
     this.root = root;
     this.api = new Api(root.getAttribute("data-api-base") || DEFAULT_API_BASE,
       root.getAttribute("data-tenant-id") || DEFAULT_TENANT_ID);
+    this.compact = root.getAttribute("data-rbs-layout") === "compact";
     this.cfg = null;
     this.state = {
       trip_type: "one_way",
@@ -317,7 +345,7 @@
 
   BookingModule.prototype.applyTheme = function () {
     var color = this.cfg && this.cfg.config && this.cfg.config.primary_color;
-    if (color && !this.root.style.getPropertyValue("--rbs-primary")) {
+    if (color && !this.root.hasAttribute("data-rbs-theme") && !this.root.style.getPropertyValue("--rbs-primary")) {
       this.root.style.setProperty("--rbs-primary", color);
     }
   };
@@ -348,10 +376,13 @@
     var cfg = this.cfg;
     var conf = cfg.config || {};
     this.root.innerHTML = "";
+    this.root.classList.toggle("rbs--compact", this.compact);
+    this.stepNo = 0;
 
+    var title = this.root.getAttribute("data-rbs-title") || conf.title || "Réservez votre course";
     var header = el("div", { class: "rbs-head" }, [
-      el("h2", { class: "rbs-title", text: conf.title || "Réservez votre course" }),
-      conf.subtitle ? el("p", { class: "rbs-subtitle", text: conf.subtitle }) : null,
+      el("h2", { class: "rbs-title" }, [this.compact ? icon("pin") : null, title]),
+      conf.subtitle && !this.compact ? el("p", { class: "rbs-subtitle", text: conf.subtitle }) : null,
     ]);
     this.root.appendChild(header);
 
@@ -365,19 +396,36 @@
     this.form = form;
 
     form.appendChild(this.renderTripSection());
-    form.appendChild(this.renderVehicleSection());
-    if ((cfg.service_options || []).some(function (o) { return o.active !== false; })) {
-      form.appendChild(this.renderOptionsSection());
+
+    // En mode compact, le trajet est saisi d'abord ; le reste s'ouvre ensuite.
+    var details = el("div", { class: "rbs-details" });
+    this.details = details;
+    if (this.compact) {
+      details.hidden = true;
+      this.tripErrorBox = el("div", { class: "rbs-alert rbs-alert--error", role: "alert", hidden: true });
+      this.continueWrap = el("div", { class: "rbs-continue" }, [
+        this.tripErrorBox,
+        el("button", { type: "button", class: "rbs-btn rbs-btn--primary",
+          text: this.root.getAttribute("data-rbs-continue") || "Réserver mon trajet",
+          onclick: function () { self.reveal(); } }),
+      ]);
+      form.appendChild(this.continueWrap);
     }
-    form.appendChild(this.renderContactSection());
-    form.appendChild(this.renderPaymentSection());
+
+    details.appendChild(this.renderVehicleSection());
+    if ((cfg.service_options || []).some(function (o) { return o.active !== false; })) {
+      details.appendChild(this.renderOptionsSection());
+    }
+    details.appendChild(this.renderContactSection());
+    details.appendChild(this.renderPaymentSection());
 
     this.summary = el("div", { class: "rbs-summary", "aria-live": "polite" });
     this.errorBox = el("div", { class: "rbs-alert rbs-alert--error", role: "alert", hidden: true });
     this.submitBtn = el("button", { type: "submit", class: "rbs-btn rbs-btn--primary rbs-submit",
       text: conf.button_text || "Réserver maintenant" });
 
-    form.appendChild(el("div", { class: "rbs-footer" }, [this.summary, this.errorBox, this.submitBtn]));
+    details.appendChild(el("div", { class: "rbs-footer" }, [this.summary, this.errorBox, this.submitBtn]));
+    form.appendChild(details);
     form.addEventListener("submit", function (e) { e.preventDefault(); self.submit(); });
 
     this.root.appendChild(form);
@@ -385,17 +433,37 @@
     this.updateSummary();
   };
 
-  function section(num, title, children) {
-    return el("fieldset", { class: "rbs-section" }, [
-      el("legend", { class: "rbs-legend" }, [el("span", { class: "rbs-step", text: String(num) }), title]),
+  BookingModule.prototype.reveal = function () {
+    var errors = this.validateTrip();
+    if (errors.length) { this.showError(errors, this.tripErrorBox); return; }
+    this.showError(null, this.tripErrorBox);
+    var opening = this.details.hidden;
+    this.details.hidden = false;
+    this.continueWrap.hidden = true;
+    this.fetchQuotes();
+    if (opening) {
+      var first = this.details.querySelector(".rbs-section");
+      if (first) first.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  BookingModule.prototype.nextStep = function () { return ++this.stepNo; };
+
+  function section(num, title, children, extraClass) {
+    return el("fieldset", { class: "rbs-section" + (extraClass ? " " + extraClass : "") }, [
+      el("legend", { class: "rbs-legend" }, [num ? el("span", { class: "rbs-step", text: String(num) }) : null, title]),
     ].concat(children));
   }
 
   function field(label, input, opts) {
     opts = opts || {};
-    return el("div", { class: "rbs-field" + (opts.wide ? " rbs-field--wide" : ""), "data-field": opts.key || null }, [
+    var control = opts.icon
+      ? el("div", { class: "rbs-iconfield" }, [icon(opts.icon), input])
+      : input;
+    var cls = "rbs-field" + (opts.wide ? " rbs-field--wide" : "") + (opts.showLabel ? " rbs-field--labelled" : "");
+    return el("div", { class: cls, "data-field": opts.key || null }, [
       el("label", { class: "rbs-label", for: input.id || null, text: label }),
-      input,
+      control,
       opts.hint ? el("small", { class: "rbs-hint", text: opts.hint }) : null,
     ]);
   }
@@ -418,11 +486,11 @@
     }
 
     this.pickupField = new AddressField(this.api, {
-      id: "rbs-pickup", name: "pickup_address", placeholder: "Adresse, gare, aéroport…",
+      id: "rbs-pickup", name: "pickup_address", placeholder: this.compact ? "Lieu de départ" : "Adresse, gare, aéroport…",
       onChange: function (v) { s.pickup = v; self.refreshQuotes(); },
     });
     this.dropoffField = new AddressField(this.api, {
-      id: "rbs-dropoff", name: "dropoff_address", placeholder: "Adresse, gare, aéroport…",
+      id: "rbs-dropoff", name: "dropoff_address", placeholder: this.compact ? "Destination" : "Adresse, gare, aéroport…",
       onChange: function (v) { s.dropoff = v; self.refreshQuotes(); },
     });
 
@@ -451,18 +519,19 @@
         self.refreshQuotes();
       } });
 
-    return section(1, "Votre trajet", [
+    var compact = this.compact;
+    var wide = !compact;
+    return section(compact ? null : this.nextStep(), "Votre trajet", [
       tabs,
-      el("div", { class: "rbs-grid" }, [
-        field("Départ", this.pickupField.root, { wide: true }),
-        el("div", { class: "rbs-swap-wrap rbs-field--wide", "data-field": "dropoff" }, [swap]),
-        field("Arrivée", this.dropoffField.root, { wide: true, key: "dropoff" }),
-        field("Date et heure de prise en charge", this.pickupAtInput),
-        field("Date et heure du retour", this.returnAtInput, { key: "return_at" }),
-        field("Durée (heures)", this.durationInput, { key: "duration",
-          hint: "Entre " + (hourly.min_hours || 1) + " h et " + (hourly.max_hours || 12) + " h" }),
+      el("div", { class: "rbs-grid rbs-grid--trip" }, [
+        field(compact ? "Lieu de départ" : "Départ", this.pickupField.root, { wide: wide, icon: "pin" }),
+        compact ? null : el("div", { class: "rbs-swap-wrap rbs-field--wide", "data-field": "dropoff" }, [swap]),
+        field(compact ? "Destination" : "Arrivée", this.dropoffField.root, { wide: wide, key: "dropoff", icon: "flag" }),
+        field(compact ? "Date et heure" : "Date et heure de prise en charge", this.pickupAtInput, { icon: "calendar" }),
+        field("Date et heure du retour", this.returnAtInput, { key: "return_at", icon: "repeat", showLabel: true }),
+        field("Durée (heures)", this.durationInput, { key: "duration", icon: "clock", showLabel: true }),
       ]),
-    ]);
+    ], compact ? "rbs-section--trip" : null);
   };
 
   BookingModule.prototype.updateTripType = function () {
@@ -488,7 +557,7 @@
     cats.forEach(function (c) {
       var id = "rbs-cat-" + c.id;
       var img = c.image_url ? el("img", { src: /^https?:/.test(c.image_url) ? c.image_url : self.api.origin + c.image_url,
-        alt: "", loading: "lazy", class: "rbs-vehicle-img" }) : null;
+        alt: "", class: "rbs-vehicle-img" }) : null;
       var input = el("input", { type: "radio", name: "vehicle_type", id: id, value: c.id, class: "rbs-vehicle-input",
         checked: s.vehicle_type === c.id, onchange: function () { s.vehicle_type = c.id; self.applyCapacity(); self.updateSummary(); } });
       var card = el("label", { for: id, class: "rbs-vehicle" }, [
@@ -514,7 +583,7 @@
     this.quoteStatus = el("p", { class: "rbs-quote-status", "aria-live": "polite",
       text: "Renseignez votre trajet pour afficher les prix." });
 
-    var sec = section(2, "Véhicule et passagers", [
+    var sec = section(this.nextStep(), "Véhicule et passagers", [
       this.vehicleList,
       this.quoteStatus,
       el("div", { class: "rbs-grid" }, [
@@ -563,11 +632,11 @@
           el("span", { class: "rbs-option-price", text: o.price ? "+ " + formatPrice(o.price) : "Offert" }),
         ]));
       });
-    return section(3, "Options", [list]);
+    return section(this.nextStep(), "Options", [list]);
   };
 
   BookingModule.prototype.renderContactSection = function () {
-    var num = this.form.querySelectorAll(".rbs-section").length + 1;
+    var num = this.nextStep();
     function input(name, type, label, attrs) {
       var i = el("input", Object.assign({ type: type, id: "rbs-" + name, name: name, class: "rbs-input" }, attrs || {}));
       return field(label, i);
@@ -591,7 +660,7 @@
     var s = this.state;
     var methods = (this.cfg.payment_methods && this.cfg.payment_methods.length) ? this.cfg.payment_methods : ["cash_onboard"];
     s.payment_method = methods[0];
-    var num = this.form.querySelectorAll(".rbs-section").length + 1;
+    var num = this.nextStep();
     var list = el("div", { class: "rbs-payments", role: "radiogroup", "aria-label": "Mode de paiement" });
     methods.forEach(function (m, i) {
       var id = "rbs-pay-" + m;
@@ -716,12 +785,9 @@
 
   /* -------------------------- Validation ---------------------------- */
 
-  BookingModule.prototype.validate = function () {
+  BookingModule.prototype.validateTrip = function () {
     var s = this.state;
-    var f = this.form;
     var errors = [];
-    var val = function (n) { var i = f.querySelector('[name="' + n + '"]'); return i ? i.value.trim() : ""; };
-
     if (!s.pickup.address) errors.push("Indiquez l'adresse de départ.");
     if (s.trip_type !== "hourly" && !s.dropoff.address) errors.push("Indiquez l'adresse d'arrivée.");
     if (!s.pickup_at) errors.push("Indiquez la date et l'heure de prise en charge.");
@@ -730,6 +796,14 @@
       if (!s.return_at) errors.push("Indiquez la date et l'heure du retour.");
       else if (s.return_at <= s.pickup_at) errors.push("Le retour doit être postérieur à l'aller.");
     }
+    return errors;
+  };
+
+  BookingModule.prototype.validate = function () {
+    var s = this.state;
+    var f = this.form;
+    var errors = this.validateTrip();
+    var val = function (n) { var i = f.querySelector('[name="' + n + '"]'); return i ? i.value.trim() : ""; };
     if (!s.vehicle_type) errors.push("Choisissez un véhicule.");
     var c = this.selectedCategory();
     var pax = Number(this.paxInput.value) || 0;
@@ -743,16 +817,17 @@
     return errors;
   };
 
-  BookingModule.prototype.showError = function (msg) {
-    if (!msg) { this.errorBox.hidden = true; this.errorBox.innerHTML = ""; return; }
-    this.errorBox.innerHTML = "";
+  BookingModule.prototype.showError = function (msg, box) {
+    box = box || this.errorBox;
+    if (!msg) { box.hidden = true; box.innerHTML = ""; return; }
+    box.innerHTML = "";
     if (Array.isArray(msg)) {
-      this.errorBox.appendChild(el("ul", null, msg.map(function (m) { return el("li", { text: m }); })));
+      box.appendChild(el("ul", null, msg.map(function (m) { return el("li", { text: m }); })));
     } else {
-      this.errorBox.textContent = msg;
+      box.textContent = msg;
     }
-    this.errorBox.hidden = false;
-    this.errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+    box.hidden = false;
+    box.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   /* --------------------------- Réservation -------------------------- */

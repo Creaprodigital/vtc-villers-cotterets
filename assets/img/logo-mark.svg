@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 56" role="img" aria-label="VTC Villers Cotterêts">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4b2bc9"/>
+      <stop offset=".55" stop-color="#8a2fd0"/>
+      <stop offset="1" stop-color="#e04fb4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#g)" fill-rule="evenodd" d="M33 1C24.2 1 17 8.1 17 17c0 11.4 13.7 25.3 15 26.6a1.4 1.4 0 0 0 2 0C35.3 42.3 49 28.4 49 17 49 8.1 41.8 1 33 1Zm0 8.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15Z"/>
+  <path fill="url(#g)" d="M1 52.5c9.5.6 20.6-2.2 30.2-7.3 8.2-4.4 13.6-9.7 19-13.3 4.3-2.9 8.6-4.4 13.3-4.6-4.7 1.8-8.6 4.6-12.8 8.7-6.1 5.9-11.4 11.5-20.6 15.2C21.4 54.3 10.6 55.4 1 52.5Z"/>
+</svg>

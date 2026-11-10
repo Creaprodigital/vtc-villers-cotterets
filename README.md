@@ -1,4 +1,4 @@
-# TAOL VTC Villers-Cotterêts — site & module de réservation
+# VTC Villers Cotterêts — site & module de réservation
 
 Site statique (HTML/CSS/JS, aucune dépendance) intégrant un module de réservation
 codé directement dans la page, branché sur l'**API publique RBS** (Ride Booking System) :
@@ -15,7 +15,8 @@ pas de widget ni d'iframe. RBS gère prix, créneaux, paiement et notifications.
 | `index.html` | Page d'accueil avec le module de réservation (`#reservation`) |
 | `assets/rbs-booking.js` | Module de réservation (client API + formulaire) |
 | `assets/rbs-booking.css` | Styles du module (préfixe `.rbs`, autonome) |
-| `assets/site.css` | Styles du site |
+| `assets/site.css` | Styles du site (police Outfit, dégradé indigo → rose) |
+| `assets/img/` | Logo (`logo-mark.svg`) et photos (`hero.jpg`, `aeroport.jpg`, `gare.jpg`, `urgence.jpg`) |
 | `booking-success/` | Page de retour Stripe après paiement en ligne (vérifie le statut) |
 | `booking-cancel/` | Page de retour Stripe en cas d'abandon du paiement |
 
@@ -28,8 +29,18 @@ pas de widget ni d'iframe. RBS gère prix, créneaux, paiement et notifications.
 <div data-rbs-booking data-tenant-id="c24716e1-b673-4360-af88-f307a64e5947"></div>
 ```
 
-La couleur principale est lue dans la configuration RBS (`config.primary_color`) ;
-on peut la forcer avec `style="--rbs-primary:#F5B72E"` sur le conteneur.
+Options du conteneur :
+
+- `data-rbs-layout="compact"` : la carte « Où souhaitez-vous aller ? » (départ, destination,
+  date) s'affiche seule ; le reste du formulaire s'ouvre au clic sur « Réserver mon trajet ».
+- `data-rbs-title="…"` : titre de la carte.
+- `data-rbs-theme="site"` : utilise les couleurs du site (variables `--rbs-*` définies dans
+  `assets/site.css`) au lieu de la couleur configurée dans RBS.
+
+## Photos
+
+Les photos de `assets/img/` ont été extraites de la maquette et sont en basse résolution :
+remplacez-les par les originaux HD **en gardant les mêmes noms de fichiers**.
 
 ## Endpoints utilisés
 
@@ -54,6 +65,11 @@ on peut la forcer avec `style="--rbs-primary:#F5B72E"` sur le conteneur.
 - Modes de paiement issus de la configuration (à bord ou en ligne via Stripe)
 - Message de pause si les réservations sont suspendues dans RBS
 - Récapitulatif de confirmation après réservation
+
+## À compléter
+
+- Pages **Mentions légales**, **Confidentialité** et **Cookies** (obligatoires) : les liens du
+  pied de page pointent pour l'instant vers `#`.
 
 ## Tester en local
 
