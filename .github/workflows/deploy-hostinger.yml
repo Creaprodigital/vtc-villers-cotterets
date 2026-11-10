@@ -1,0 +1,49 @@
+# Déploiement automatique du site sur Hostinger (FTP) à chaque mise à jour de main.
+#
+# Secrets à créer dans GitHub : Settings → Secrets and variables → Actions
+#   FTP_SERVER     ex. ftp.votre-domaine.fr ou l'IP indiquée dans hPanel
+#   FTP_USERNAME   ex. u123456789.votre-domaine.fr
+#   FTP_PASSWORD   mot de passe du compte FTP
+#   FTP_SERVER_DIR (facultatif) dossier distant, par défaut "public_html/"
+# Infos FTP : hPanel → Sites web → votre domaine → Fichiers → Comptes FTP.
+name: Déploiement Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+    steps:
+      - name: Vérifier la configuration FTP
+        if: env.FTP_SERVER == ''
+        run: |
+          echo "::warning::Secrets FTP absents : déploiement ignoré. Ajoutez FTP_SERVER, FTP_USERNAME et FTP_PASSWORD dans Settings → Secrets and variables → Actions."
+
+      - name: Récupérer le code
+        if: env.FTP_SERVER != ''
+        uses: actions/checkout@v4
+
+      - name: Envoyer les fichiers sur Hostinger
+        if: env.FTP_SERVER != ''
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          server-dir: ${{ secrets.FTP_SERVER_DIR || 'public_html/' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            README.md

@@ -80,6 +80,24 @@ python3 -m http.server 8000
 puis ouvrir http://localhost:8000. Attention : valider le formulaire crée une **vraie**
 réservation dans RBS.
 
+## Déploiement automatique (GitHub → Hostinger)
+
+Le workflow `.github/workflows/deploy-hostinger.yml` envoie le site par FTP dans
+`public_html` à chaque mise à jour de la branche `main` (ou manuellement depuis l'onglet
+**Actions** → *Déploiement Hostinger* → *Run workflow*).
+
+Secrets à créer une fois dans GitHub (**Settings → Secrets and variables → Actions**),
+avec les informations de hPanel (**Sites web → domaine → Fichiers → Comptes FTP**) :
+
+| Secret | Exemple |
+| --- | --- |
+| `FTP_SERVER` | `ftp.votre-domaine.fr` |
+| `FTP_USERNAME` | `u123456789.votre-domaine.fr` |
+| `FTP_PASSWORD` | mot de passe FTP |
+| `FTP_SERVER_DIR` | facultatif, par défaut `public_html/` |
+
+Sans ces secrets, le workflow s'exécute sans rien envoyer.
+
 ## Paiement en ligne
 
 Le module envoie `origin_url = window.location.origin` à RBS ; Stripe renvoie ensuite le
