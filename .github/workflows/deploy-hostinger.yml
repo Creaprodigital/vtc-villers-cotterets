@@ -45,5 +45,6 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
+            .gitignore
             .github/**
             README.md

@@ -66,6 +66,13 @@ remplacez-les par les originaux HD **en gardant les mêmes noms de fichiers**.
 - Message de pause si les réservations sont suspendues dans RBS
 - Récapitulatif de confirmation après réservation
 
+## Mise à jour et cache
+
+Les fichiers CSS/JS sont appelés avec un numéro de version (`assets/site.css?v=…`).
+**À chaque modification d'un CSS ou JS, augmentez ce numéro** dans `index.html` et dans
+les pages `booking-success/` et `booking-cancel/`, sinon les visiteurs peuvent garder
+l'ancienne version en cache. Le fichier `.htaccess` force la revalidation des pages HTML.
+
 ## À compléter
 
 - Pages **Mentions légales**, **Confidentialité** et **Cookies** (obligatoires) : les liens du

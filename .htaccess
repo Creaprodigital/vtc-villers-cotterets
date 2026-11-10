@@ -1,0 +1,7 @@
+# Hostinger (LiteSpeed/Apache) : toujours revalider les pages HTML,
+# pour que les nouvelles versions des CSS/JS (?v=…) soient prises en compte.
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
