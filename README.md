@@ -1,0 +1,71 @@
+# TAOL VTC Villers-Cotterêts — site & module de réservation
+
+Site statique (HTML/CSS/JS, aucune dépendance) intégrant un module de réservation
+codé directement dans la page, branché sur l'**API publique RBS** (Ride Booking System) :
+pas de widget ni d'iframe. RBS gère prix, créneaux, paiement et notifications.
+
+- Documentation API : https://ridebookingsystem.com/docs/api
+- Base URL : `https://ridebookingsystem.com/api`
+- Tenant ID : `c24716e1-b673-4360-af88-f307a64e5947`
+
+## Fichiers
+
+| Fichier | Rôle |
+| --- | --- |
+| `index.html` | Page d'accueil avec le module de réservation (`#reservation`) |
+| `assets/rbs-booking.js` | Module de réservation (client API + formulaire) |
+| `assets/rbs-booking.css` | Styles du module (préfixe `.rbs`, autonome) |
+| `assets/site.css` | Styles du site |
+| `booking-success/` | Page de retour Stripe après paiement en ligne (vérifie le statut) |
+| `booking-cancel/` | Page de retour Stripe en cas d'abandon du paiement |
+
+## Intégrer le module dans n'importe quelle page
+
+```html
+<link rel="stylesheet" href="assets/rbs-booking.css">
+<script src="assets/rbs-booking.js" defer></script>
+
+<div data-rbs-booking data-tenant-id="c24716e1-b673-4360-af88-f307a64e5947"></div>
+```
+
+La couleur principale est lue dans la configuration RBS (`config.primary_color`) ;
+on peut la forcer avec `style="--rbs-primary:#F5B72E"` sur le conteneur.
+
+## Endpoints utilisés
+
+| Méthode | Endpoint | Usage |
+| --- | --- | --- |
+| GET | `/public/widget/{tenant_id}` | Configuration : catégories (capacité `max_seats` / `max_luggage`), options, modes de paiement, types de trajet, pause des réservations |
+| GET | `/public/maps/autocomplete?q=…&tenant_id=…` | Autocomplétion d'adresses (proxy Google Places) |
+| GET | `/public/maps/place-details?place_id=…&tenant_id=…` | Coordonnées de l'adresse choisie |
+| POST | `/public/quote-all-categories` | Prix en temps réel pour chaque catégorie (options et code promo inclus) |
+| POST | `/public/booking` | Création de la réservation (confirmation email/SMS envoyée par RBS) |
+| POST | `/public/payment/checkout` | Session Stripe si paiement `card_online`, puis redirection |
+| GET | `/public/payment/status/{session_id}` | Vérification du paiement (page `booking-success`) |
+| POST | `/public/payment/cancel` | Signalement d'un paiement abandonné (page `booking-cancel`) |
+
+## Fonctionnalités
+
+- Aller simple / aller-retour / mise à disposition, selon les types activés dans RBS
+- Autocomplétion d'adresses au clavier, inversion départ/arrivée
+- Prix affiché pour chaque véhicule, recalculé à chaque modification
+- Nombre de passagers et de bagages borné à la capacité du véhicule choisi
+- Options (ex. siège enfant), n° de vol/train, informations complémentaires, code promo
+- Modes de paiement issus de la configuration (à bord ou en ligne via Stripe)
+- Message de pause si les réservations sont suspendues dans RBS
+- Récapitulatif de confirmation après réservation
+
+## Tester en local
+
+```bash
+python3 -m http.server 8000
+```
+
+puis ouvrir http://localhost:8000. Attention : valider le formulaire crée une **vraie**
+réservation dans RBS.
+
+## Paiement en ligne
+
+Le module envoie `origin_url = window.location.origin` à RBS ; Stripe renvoie ensuite le
+client sur `/booking-success?session_id=…` ou `/booking-cancel?…` à la racine du domaine.
+Le site doit donc être publié à la racine du domaine pour que ces pages soient trouvées.

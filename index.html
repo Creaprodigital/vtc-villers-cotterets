@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAOL VTC Villers-Cotterêts — Réservation de chauffeur privé</title>
+  <meta name="description" content="Réservez votre VTC à Villers-Cotterêts : transferts gares et aéroports (CDG, Orly, Beauvais), trajets longue distance, prix fixe annoncé à la réservation.">
+  <link rel="stylesheet" href="assets/site.css">
+  <link rel="stylesheet" href="assets/rbs-booking.css">
+  <script src="assets/rbs-booking.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">TAOL <span>VTC</span></a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="#services">Services</a>
+        <a href="#reservation" class="nav-cta">Réserver</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow">Chauffeur privé · Villers-Cotterêts &amp; Aisne</p>
+          <h1>Votre VTC à Villers-Cotterêts, à l'heure et au prix annoncé</h1>
+          <p class="lead">Transferts vers les gares et les aéroports parisiens, déplacements professionnels, trajets longue distance. Prix fixe calculé instantanément, sans surprise.</p>
+          <a href="#reservation" class="btn">Estimer et réserver</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="reservation" class="booking-section" aria-label="Réservation en ligne">
+      <div class="container">
+        <!-- Module de réservation RBS (API publique) -->
+        <div data-rbs-booking data-tenant-id="c24716e1-b673-4360-af88-f307a64e5947"></div>
+        <noscript><p class="noscript">Activez JavaScript pour réserver en ligne.</p></noscript>
+      </div>
+    </section>
+
+    <section id="services" class="services">
+      <div class="container">
+        <h2>Nos services</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Aéroports</h3>
+            <p>Roissy-CDG, Orly, Beauvais : prise en charge à domicile, suivi de votre vol et accueil à l'arrivée.</p>
+          </article>
+          <article class="card">
+            <h3>Gares</h3>
+            <p>Villers-Cotterêts, Soissons, Crépy-en-Valois, Paris-Nord… pour ne jamais rater votre train.</p>
+          </article>
+          <article class="card">
+            <h3>Longue distance</h3>
+            <p>Déplacements professionnels ou personnels partout en France, en berline ou en van.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© TAOL VTC Villers-Cotterêts</p>
+    </div>
+  </footer>
+</body>
+</html>

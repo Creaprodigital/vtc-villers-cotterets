@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Paiement annulé — TAOL VTC Villers-Cotterêts</title>
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="stylesheet" href="../assets/rbs-booking.css">
+</head>
+<body>
+  <main class="container" style="padding:48px 16px">
+    <!-- Page de retour Stripe en cas d'abandon : {origin_url}/booking-cancel?bid=…&session_id=…&ct=… -->
+    <div class="rbs">
+      <div class="rbs-confirm">
+        <div class="rbs-confirm-icon" aria-hidden="true">!</div>
+        <h1 class="rbs-title">Paiement annulé</h1>
+        <p class="rbs-subtitle">Votre paiement n'a pas été effectué et aucun montant n'a été débité. Vous pouvez relancer une réservation à tout moment.</p>
+        <a class="rbs-btn rbs-btn--primary" href="../#reservation">Revenir à la réservation</a>
+      </div>
+    </div>
+  </main>
+  <script>
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var bid = p.get("bid"), sid = p.get("session_id"), ct = p.get("ct");
+    if (!bid && !sid) return;
+    // Informe RBS de l'abandon pour libérer le créneau
+    fetch("https://ridebookingsystem.com/api/public/payment/cancel", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ booking_id: bid, session_id: sid, token: ct })
+    }).catch(function () {});
+  })();
+  </script>
+</body>
+</html>
