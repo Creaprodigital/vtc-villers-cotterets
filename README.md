@@ -39,8 +39,9 @@ Options du conteneur :
 
 ## Photos
 
-Les photos de `assets/img/` ont été extraites de la maquette et sont en basse résolution :
-remplacez-les par les originaux HD **en gardant les mêmes noms de fichiers**.
+Photos HD (créations générées par IA, scènes fictives) redimensionnées pour le web :
+`hero.jpg` (1400 px), `aeroport.jpg`, `gare.jpg`, `urgence.jpg` (900 px, format 3:2).
+Pour en changer, gardez les mêmes noms et augmentez le `?v=` des balises `<img>` dans `index.html`.
 
 ## Endpoints utilisés
 
