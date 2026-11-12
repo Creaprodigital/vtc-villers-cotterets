@@ -20,20 +20,40 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      FTP_SERVER: ${{ secrets.FTP_SERVER }}
     steps:
       - name: Vérifier la configuration FTP
-        if: env.FTP_SERVER == ''
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          # Seulement pour détecter une erreur fréquente : valeurs saisies en « Variables »
+          # au lieu de « Secrets ». Leur contenu n'est jamais affiché.
+          VAR_FTP_SERVER: ${{ vars.FTP_SERVER }}
+          VAR_FTP_USERNAME: ${{ vars.FTP_USERNAME }}
+          VAR_FTP_PASSWORD: ${{ vars.FTP_PASSWORD }}
         run: |
-          echo "::warning::Secrets FTP absents : déploiement ignoré. Ajoutez FTP_SERVER, FTP_USERNAME et FTP_PASSWORD dans Settings → Secrets and variables → Actions."
+          missing=""
+          for name in FTP_SERVER FTP_USERNAME FTP_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              missing="$missing $name"
+              var="VAR_$name"
+              if [ -n "${!var}" ]; then
+                echo "::error::$name est enregistré dans l'onglet « Variables ». Il doit être recréé dans l'onglet « Secrets » → Repository secrets."
+              else
+                echo "::error::Secret $name absent ou vide."
+              fi
+            fi
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Déploiement annulé, secrets manquants :$missing. À créer dans Settings → Secrets and variables → Actions → onglet Secrets → New repository secret (pas en Environment secret)."
+            exit 1
+          fi
+          echo "Configuration FTP complète."
 
       - name: Récupérer le code
-        if: env.FTP_SERVER != ''
         uses: actions/checkout@v4
 
       - name: Envoyer les fichiers sur Hostinger
-        if: env.FTP_SERVER != ''
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}

@@ -131,7 +131,8 @@ avec les informations de hPanel (**Sites web → domaine → Fichiers → Compte
 | `FTP_PASSWORD` | mot de passe FTP |
 | `FTP_SERVER_DIR` | facultatif, par défaut `public_html/` |
 
-Sans ces secrets, le workflow s'exécute sans rien envoyer.
+Si l'un des trois premiers secrets manque, le workflow échoue (en rouge) avec un message
+indiquant lequel, et signale s'il a été créé par erreur dans l'onglet « Variables ».
 
 ## Paiement en ligne
 
