@@ -51,6 +51,11 @@ jobs:
             echo "::error::Déploiement annulé, secrets manquants :$missing. À créer dans Settings → Secrets and variables → Actions → onglet Secrets → Environments → FTP_SERVER → Environment secrets."
             exit 1
           fi
+          case "$FTP_SERVER" in
+            *://*|*/*|*" "*)
+              echo "::error::FTP_SERVER doit contenir uniquement l'adresse du serveur (ex. 31.97.194.144 ou ftp.votre-domaine.fr), sans « ftp:// », sans « / » et sans espace."
+              exit 1 ;;
+          esac
           echo "Configuration FTP complète."
 
       - name: Récupérer le code
