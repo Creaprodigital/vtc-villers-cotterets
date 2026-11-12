@@ -48,7 +48,7 @@ jobs:
             fi
           done
           if [ -n "$missing" ]; then
-            echo "::error::Déploiement annulé, secrets manquants :$missing. À créer dans Settings → Secrets and variables → Actions → onglet Secrets → Environments → FTP_SERVER → Environment secrets."
+            echo "::error::Déploiement annulé, secrets manquants :$missing. À créer dans Settings → Secrets and variables → Actions → Repository secrets, ou dans Settings → Environments → FTP_SERVER → Environment secrets."
             exit 1
           fi
           case "$FTP_SERVER" in
