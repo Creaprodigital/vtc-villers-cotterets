@@ -391,3 +391,11 @@ mark.todo { background: #fff1c2; color: #6b4b00; border-radius: 4px; padding: 1p
 .chips--links a { display: block; padding: 8px 16px; color: var(--navy); text-decoration: none; border-radius: 999px; }
 .chips--links a:hover { color: var(--purple); }
 .chips--links a:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
+
+/* Bouton flottant WhatsApp */
+.wa-float { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: #25d366; color: #fff; box-shadow: 0 10px 28px -8px rgba(0, 0, 0, .35); transition: transform .2s ease, box-shadow .2s ease; }
+.wa-float:hover { transform: scale(1.08); box-shadow: 0 14px 32px -8px rgba(0, 0, 0, .45); }
+.wa-float:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; }
+.wa-float svg { width: 32px; height: 32px; fill: currentColor; }
+@media (max-width: 600px) { .wa-float { right: 16px; bottom: 16px; width: 54px; height: 54px; } .wa-float svg { width: 28px; height: 28px; } }
+@media print { .wa-float { display: none; } }
