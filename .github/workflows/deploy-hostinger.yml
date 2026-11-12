@@ -20,6 +20,9 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Les secrets FTP sont rangés dans l'environnement GitHub « FTP_SERVER »
+    # (Settings → Environments → FTP_SERVER → Environment secrets).
+    environment: FTP_SERVER
     steps:
       - name: Vérifier la configuration FTP
         env:
@@ -45,7 +48,7 @@ jobs:
             fi
           done
           if [ -n "$missing" ]; then
-            echo "::error::Déploiement annulé, secrets manquants :$missing. À créer dans Settings → Secrets and variables → Actions → onglet Secrets → New repository secret (pas en Environment secret)."
+            echo "::error::Déploiement annulé, secrets manquants :$missing. À créer dans Settings → Secrets and variables → Actions → onglet Secrets → Environments → FTP_SERVER → Environment secrets."
             exit 1
           fi
           echo "Configuration FTP complète."

@@ -121,7 +121,8 @@ Le workflow `.github/workflows/deploy-hostinger.yml` envoie le site par FTP dans
 `public_html` à chaque mise à jour de la branche `main` (ou manuellement depuis l'onglet
 **Actions** → *Déploiement Hostinger* → *Run workflow*).
 
-Secrets à créer une fois dans GitHub (**Settings → Secrets and variables → Actions**),
+Secrets à créer une fois dans GitHub, dans l'environnement `FTP_SERVER`
+(**Settings → Environments → FTP_SERVER → Environment secrets**),
 avec les informations de hPanel (**Sites web → domaine → Fichiers → Comptes FTP**) :
 
 | Secret | Exemple |
@@ -132,7 +133,7 @@ avec les informations de hPanel (**Sites web → domaine → Fichiers → Compte
 | `FTP_SERVER_DIR` | facultatif, par défaut `public_html/` |
 
 Si l'un des trois premiers secrets manque, le workflow échoue (en rouge) avec un message
-indiquant lequel, et signale s'il a été créé par erreur dans l'onglet « Variables ».
+indiquant lequel, et signale s'il a été créé par erreur en « Variable » au lieu de « Secret ».
 
 ## Paiement en ligne
 
